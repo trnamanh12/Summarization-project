@@ -1,2 +1,9 @@
 /paper/
 /ViMs-Dataset-master/ViMs/
+# Ignore .DS_Store files
+.DS_Store
+
+# Other files and directories to ignore
+node_modules/
+dist/
+.env
