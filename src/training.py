@@ -144,4 +144,4 @@ def train(world_size, model, train_loader, epochs, rank ):
 def run(train, world_size, model, train_loader , epochs ):
     mp.spawn(train, args=(world_size, model, train_loader,  epochs), nprocs=world_size, join=True)
 
-run(train, 2, model, train_loader, 2, device)
+run(train, 2, model, train_loader, 2 )
