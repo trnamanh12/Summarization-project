@@ -58,7 +58,6 @@ def processing_data(input_file):
     
     return all_results
 
-import torch
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 input_file = "/kaggle/input/summarization-dataset-vlspbusu2022/train_data_new.jsonl"  # Replace with your actual input file name
 valid_file = "/kaggle/input/summarization-dataset-vlspbusu2022/train_data_new.jsonl"  # Replace with your actual input file name
@@ -136,11 +135,11 @@ def train(model, train_loader, criterion, optimzer, epochs, device, rank, world_
                 if i % 100 == 0:
                     end = time.time()
                     print(f"Epoch: {epoch}, Step: {i}, Loss: {running_loss/i}, Time: {end-start}")
-                cleanup()
             end = time.time()
-            print(f"Epoch: {epoch}, Loss: {running_loss/epoch*i}, Time: {end-start}")
+            print(f"Epoch: {epoch}, Loss: {running_loss / (epoch * len(train_loader))}, Time: {end-start}")
+        cleanup()
         end = time.time()
-        print(f"Full Time: {end-start}"
+        print(f"Full Time: {end-start}")
 
 def run(train, world_size, model, train_loader, criterion, optimizer, epochs, device):
     mp.spawn(train, args=(world_size, model, train_loader, criterion, optimizer, epochs, device), nprocs=world_size, join=True)
