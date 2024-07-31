@@ -101,7 +101,7 @@ valid_loader = torch.utils.data.DataLoader(valid_data, batch_size=1, num_workers
 import time 
 
 
-def train(model, train_loader, criterion, optimzer, epochs, device, rank, world_size):
+def train(world_size, model, train_loader, epochs, rank ):
         model.train()
         start= time.time()
         model.to(rank)
@@ -141,5 +141,7 @@ def train(model, train_loader, criterion, optimzer, epochs, device, rank, world_
         end = time.time()
         print(f"Full Time: {end-start}")
 
-def run(train, world_size, model, train_loader, criterion, optimizer, epochs, device):
-    mp.spawn(train, args=(world_size, model, train_loader, criterion, optimizer, epochs, device), nprocs=world_size, join=True)
+def run(train, world_size, model, train_loader , epochs ):
+    mp.spawn(train, args=(world_size, model, train_loader,  epochs), nprocs=world_size, join=True)
+
+run(train, 2, model, train_loader, 2, device)
